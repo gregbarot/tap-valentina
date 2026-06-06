@@ -406,7 +406,7 @@ function spawnValentina() {
     
     // 6. Configurer la disparition du personnage (durée d'apparition aléatoire selon le type)
     let lifespan = 2000; // Par défaut 2.0 sec visible Max
-    if (type === 'rage') lifespan = 650; // Trés dure à attraper !
+    if (type === 'rage') lifespan = 1800; // Trés dure à attraper !
     if (type === 'ego-boost') lifespan = 2300; // Plus de temps pour lui mettre 3 coups !
     if (type === 'victime') lifespan = 1800;
     
