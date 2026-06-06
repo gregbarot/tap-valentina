@@ -384,6 +384,12 @@ function spawnValentina() {
         shield.classList.add('mirror-shield');
         mole.appendChild(shield);
     }
+
+    if (type === 'victime') {
+    const halo = document.createElement('div');
+    halo.classList.add('victime-halo');
+    mole.appendChild(halo);
+    }
     
     container.appendChild(mole);
     
