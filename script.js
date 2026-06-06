@@ -506,6 +506,13 @@ function handleMoleClick(moleId, event) {
     const mole = info.element;
     const type = info.type;
     
+    if (mole.classList.contains('is-hit')) return;
+
+    // On annule les timers automatiques dès que Valentina est touchée
+    info.timeoutIds.forEach(id => clearTimeout(id));
+    info.timeoutIds = [];
+
+
     // Coordonnées pour l'affichage du chiffre de score flottant
     const rect = mole.getBoundingClientRect();
     const clickX = event.clientX || (event.touches && event.touches[0].clientX) || rect.left + rect.width / 2;
