@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tap Valentina</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Police cartoon et moderne pour le jeu -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Conteneur principal du jeu -->
+    <div id="game-container">
+        
+        <!-- ÉCRAN DE DÉPART -->
+        <section id="start-screen" class="screen active">
+            <div class="logo-area">
+                <div class="emoji-logo">🐹🕶️</div>
+                <h1 class="game-title">Tap Valentina</h1>
+                <p class="game-subtitle">"Moi, je dis ça pour aider."</p>
+            </div>
+            
+            <div class="intro-box">
+                <p>Valentina se croit supérieure, adore se victimiser et prend la mouche pour un rien !</p>
+                <p class="instructions">Devenez le héros du bureau : tapez sur Valentina quand elle surgit de ses trous pour remplir sa jauge de colère... mais gare à ses réactions !</p>
+            </div>
+            
+            <div class="best-score-container">
+                <span class="best-score-label">Record personnel :</span>
+                <span id="best-score" class="best-score-value">0</span> 🎯
+            </div>
+            
+            <button id="start-btn" class="btn btn-primary ripple">COMMENCER LA PARTIE</button>
+        </section>
+
+        <!-- ÉCRAN DE JEU (PHASE NORMALE ET BOSS) -->
+        <section id="play-screen" class="screen">
+            
+            <!-- Barre d'infos du haut -->
+            <div id="game-header">
+                <div class="header-indicator">
+                    <span class="indicator-icon">🎯</span>
+                    <div class="indicator-details">
+                        <span class="label">Score</span>
+                        <span id="current-score" class="score-value">0</span>
+                    </div>
+                </div>
+
+                <div class="header-indicator lives-indicator">
+                    <span class="indicator-icon">❤️</span>
+                    <div class="indicator-details">
+                        <span class="label">Vies</span>
+                        <span id="lives-display" class="lives-value">❤️❤️❤️</span>
+                    </div>
+                </div>
+
+                <div class="header-indicator level-indicator">
+                    <span class="indicator-icon">⭐</span>
+                    <div class="indicator-details">
+                        <span class="label">Niveau</span>
+                        <span id="level-display" class="score-value">1</span>
+                    </div>
+                </div>
+
+                <div class="header-indicator anger-indicator">
+                    <span class="indicator-icon">🔥</span>
+                    <div class="indicator-details">
+                        <span class="label">Colère de Valentina</span>
+                        <div class="progress-bar-container">
+                            <div id="anger-progress" class="progress-bar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dialogue instantané (quotes de Valentina) -->
+            <div id="quote-bubble-container">
+                <div id="quote-bubble" class="hidden">
+                    <span id="quote-text">Moi, je dis ça pour aider.</span>
+                </div>
+            </div>
+
+            <!-- PHASE NORMALE : GRILLE 3x3 -->
+            <div id="grid-stage" class="stage active">
+                <div class="grid">
+                    <!-- Trou 1 -->
+                    <div class="hole" data-index="0">
+                        <div class="dirt"></div>
+                        <div class="mole-container"></div>
+                    </div>
+                    <!-- Trou 2 -->
+                    <div class="hole" data-index="1">
+                        <div class="dirt"></div>
+                        <div class="mole-container"></div>
+                    </div>
+                    <!-- Trou 3 -->
+                    <div class="hole" data-index="2">
+                        <div class="dirt"></div>
+                        <div class="mole-container"></div>
+                    </div>
+                    <!-- Trou 4 -->
+                    <div class="hole" data-index="3">
+                        <div class="dirt"></div>
+                        <div class="mole-container"></div>
+                    </div>
+                    <!-- Trou 5 -->
+                    <div class="hole" data-index="4">
+                        <div class="dirt"></div>
+                        <div class="mole-container"></div>
+                    </div>
+                    <!-- Trou 6 -->
+                    <div class="hole" data-index="5">
+                        <div class="dirt"></div>
+                        <div class="mole-container"></div>
+                    </div>
+                    <!-- Trou 7 -->
+                    <div class="hole" data-index="6">
+                        <div class="dirt"></div>
+                        <div class="mole-container"></div>
+                    </div>
+                    <!-- Trou 8 -->
+                    <div class="hole" data-index="7">
+                        <div class="dirt"></div>
+                        <div class="mole-container"></div>
+                    </div>
+                    <!-- Trou 9 -->
+                    <div class="hole" data-index="8">
+                        <div class="dirt"></div>
+                        <div class="mole-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PHASE ULTIMATE FORM (BOSS ET FLAMES) -->
+            <div id="boss-stage" class="stage">
+                <div class="boss-flame-bg"></div>
+                <div class="boss-header">
+                    <h2>👿 ULTIMATE GEANT FORM 👿</h2>
+                    <p class="boss-subtitle">Valentina est devenue un Cochon d'Inde Diabolique !</p>
+                    <div class="boss-health-container">
+                        <span class="boss-health-label">Ego de Valentina : <span id="boss-hp-percentage">100</span>%</span>
+                        <div class="boss-health-bar">
+                            <div id="boss-health-progress" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="boss-body-container">
+                    <!-- Target de Tap Géante -->
+                    <div id="boss-character" class="boss-character">
+                        <!-- Code CSS dessinera le cochon d'inde diabolique géant ou l'image si présente -->
+                        <div class="boss-graphic"></div>
+                        <div class="boss-glasses"></div>
+                        <div class="boss-horns"></div>
+                        <div class="boss-tail"></div>
+                    </div>
+                </div>
+                
+                <p class="boss-instructions">TAPOTEZ FRÉNÉTIQUEMENT POUR BRISER SON EGO !</p>
+            </div>
+        </section>
+
+        <!-- ÉCRAN DE FIN / VICTOIRE -->
+        <section id="victory-screen" class="screen">
+            <div class="victory-banner">🎉 VICTOIRE ! 🎉</div>
+            
+            <div id="victory-character">
+                <div id="end-face" class="valentina type-wounded">
+                    <div class="valentina-fringe"></div>
+                    <div class="valentina-jacket"></div>
+                    <div class="valentina-face">
+                        <div class="valentina-glasses"></div>
+                        <div class="valentina-eyes">
+                            <div class="eye"></div>
+                            <div class="eye"></div>
+                        </div>
+                        <div class="valentina-nose"></div>
+                        <div class="valentina-mouth"></div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="victory-title">Ego Vaincu !</h2>
+            
+            <div class="results-box">
+                <p class="victory-quote">"Je ne suis pas méchante, je suis lucide. C'est fou comme les gens sont fragiles dans ce bureau..."</p>
+                <div class="score-line">
+                    <span>Votre Score :</span>
+                    <span id="final-score" class="score-highlight">0</span>
+                </div>
+                <div class="score-line">
+                    <span>Toxique-o-mètre :</span>
+                    <span id="toxicity-rating" class="rating-highlight">Tolérable</span>
+                </div>
+            </div>
+
+            <button id="restart-btn" class="btn btn-secondary ripple">RETOUR À L'ACCUEIL</button>
+        </section>
+        
+    </div>
+
+    <!-- Script de jeu principal -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1458 @@
+/* ==========================================================================
+   STYLE COMPLET DU JEU "TAP VALENTINA"
+   Conçu pour mobile, ordinateur et compatible avec tous les navigateurs.
+   ========================================================================== */
+
+/* Variables de thème globales */
+:root {
+    --color-bg: #1a1523; /* Arrière-plan violet foncé cartoon */
+    --color-primary: #ff7f11; /* Orange Valentina signature */
+    --color-primary-dark: #cc5a00;
+    --color-accent-red: #ff3366; /* Rouge colère */
+    --color-accent-gold: #ffd23f; /* Jaune ego-boost */
+    --color-text-light: #ffffff;
+    --color-text-dark: #2c2533;
+    --color-desk: #6b4423; /* Couleur bureau / terre */
+    --color-hole: #0e0a14; /* Intérieur des trous */
+    
+    --font-heading: 'Fredoka', system-ui, -apple-system, sans-serif;
+}
+
+/* Reset de base et prévention de sélections intempestives sur mobile */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+body {
+    font-family: var(--font-heading);
+      background:
+            radial-gradient(circle at top, #3b244f 0%, #171020 55%, #09060d 100%);
+    color: var(--color-text-light);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Conteneur principal du jeu (simule un écran de téléphone ou de tablette centré) */
+#game-container {
+    background:
+            radial-gradient(circle at top left, rgba(255, 127, 17, 0.22), transparent 35%),
+            radial-gradient(circle at bottom right, rgba(255, 51, 102, 0.18), transparent 40%),
+            linear-gradient(180deg, #251833 0%, #120b19 100%);
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+    max-height: 850px;
+    position: relative;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================================================
+   STRUCTURE DES ÉCRANS
+   ========================================================================== */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2.5rem 1.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    transform: scale(0.95);
+    z-index: 1;
+}
+
+.screen.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+    z-index: 2;
+}
+
+/* ==========================================================================
+   STYLE DES BOUTONS (M3 Inspired / Cartoon)
+   ========================================================================== */
+.btn {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding: 1.1rem 2rem;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    touch-action: manipulation;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: var(--color-text-light);
+    border-bottom: 5px solid #a64300;
+}
+
+.btn-primary:active {
+    transform: translateY(3px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    border-bottom: 2px solid #a64300;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, var(--color-accent-gold) 0%, #dca000 100%);
+    color: var(--color-text-dark);
+    border-bottom: 5px solid #a37500;
+}
+
+.btn-secondary:active {
+    transform: translateY(3px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    border-bottom: 2px solid #a37500;
+}
+
+/* Animations de vagues */
+.ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   1. ÉCRAN DE DÉPART
+   ========================================================================== */
+#start-screen {
+    justify-content: center;
+    gap: 1.5rem;
+    text-align: center;
+}
+
+.logo-area {
+    margin-bottom: 1rem;
+}
+
+.emoji-logo {
+    font-size: 5rem;
+    line-height: 1;
+    margin-bottom: 1rem;
+    animation: pulseLogo 3s infinite ease-in-out;
+}
+
+.game-title {
+    font-size: 3rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #ffdf2b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    margin-bottom: 0.2rem;
+}
+
+.game-subtitle {
+    font-style: italic;
+    color: #ffd23f;
+    font-size: 1.1rem;
+}
+
+.intro-box {
+    background-color: rgba(255, 255, 255, 0.06);
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    padding: 1.25rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #e2ddec;
+    backdrop-filter: blur(5px);
+}
+
+.intro-box .instructions {
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    color: #ffaa66;
+    font-weight: 600;
+}
+
+.best-score-container {
+    font-size: 1.1rem;
+    color: #fff;
+    margin: 0.5rem 0;
+}
+
+.best-score-value {
+    color: var(--color-accent-gold);
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+/* ==========================================================================
+   2. ÉCRAN DE JEU (PLAY-SCREEN)
+   ========================================================================== */
+#play-screen {
+    padding: 1rem;
+    justify-content: flex-start;
+    gap: 1rem;
+}
+
+/* Entête du jeu */
+#game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.07);
+    border-radius: 18px;
+    padding: 0.8rem 1rem;
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.05);
+}
+
+.header-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.indicator-icon {
+    font-size: 1.6rem;
+}
+
+.indicator-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.indicator-details .label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #bfaaff;
+    letter-spacing: 0.5px;
+}
+
+.score-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* Jauge de colère */
+.anger-indicator {
+    flex: 1;
+    max-width: 48%;
+    margin-left: 0.8rem;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 14px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 2px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #ff9f1c 0%, #ff4d6d 50%, #d90429 100%);
+    border-radius: 10px;
+    transition: width 0.3s cubic-bezier(0.1, 0.8, 0.3, 1);
+    box-shadow: 0 0 10px rgba(217, 4, 41, 0.5);
+}
+
+/* Bulle de dialogue suspendue au-dessus du jeu */
+#quote-bubble-container {
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 5px 0;
+}
+
+#quote-bubble {
+    background-color: var(--color-accent-gold);
+    color: var(--color-text-dark);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.6rem 1rem;
+    border-radius: 16px;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    animation: popBubble 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    max-width: 90%;
+    text-align: center;
+    border: 2px solid #231d2b;
+}
+
+#quote-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: var(--color-accent-gold) transparent;
+    display: block;
+    width: 0;
+}
+
+#quote-bubble.hidden {
+    display: none;
+}
+
+/* ==========================================================================
+   3. GRILLE DE JEU (STAGES)
+   ========================================================================== */
+.stage {
+    display: none;
+    width: 100%;
+}
+
+.stage.active {
+    display: block;
+}
+
+/* Grille 3x3 */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 14px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 12px;
+    aspect-ratio: 1 / 1;
+}
+
+/* Les trous de taupe */
+.hole {
+    position: relative;
+    background:
+            radial-gradient(circle at center, #050309 0%, #0e0a14 55%, #24142f 100%);
+    border-radius: 50%;
+    border: 4px solid #8a4d24;
+     box-shadow:
+            inset 0 12px 22px rgba(0, 0, 0, 0.9),
+            0 5px 0 #3a2111,
+            0 8px 12px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+}
+
+/* Bordure de meuble / terre devant le trou */
+.dirt {
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 25%;
+    z-index: 20;
+    pointer-events: none;
+
+    background:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.12) 0 6%, transparent 7%),
+        radial-gradient(circle at 65% 20%, rgba(255,255,255,0.10) 0 5%, transparent 6%),
+        linear-gradient(to top, #3a1f10 0%, #6b3d1f 55%, #a55f2d 100%);
+
+    border-top: 4px solid #d58a45;
+    border-radius: 0 0 50px 50px;
+
+    box-shadow:
+        inset 0 4px 8px rgba(255,255,255,0.12),
+        inset 0 -8px 10px rgba(0,0,0,0.35);
+}
+
+/* Conteneur de Valentina dans le trou */
+.mole-container {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+/* ==========================================================================
+   DESSIN CSS DE VALENTINA (PLACEHOLDER DE QUALITÉ)
+   Afin de remplacer par une image, appliquez `background-image` sur .valentina
+   ========================================================================== */
+ .valentina {
+    /*width: 82%;
+    height: 90%;
+    position: relative;
+    border-radius: 50% 50% 10% 10%;
+    cursor: pointer;
+    transform: translateY(120%);
+    transition: transform 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    z-index: 5;*/
+
+    /* -------------------------------------------------------------
+       POUR LE REMPLACEMENT PAR VOS IMAGES PNG :
+       Il vous suffira d'ajouter des règles spécifiques comme :
+       
+       .valentina.type-normale {
+           background-image: url('images/valentina-head.png');
+           background-size: contain;
+           background-repeat: no-repeat;
+           background-position: bottom center;
+       }
+       .valentina.is-hit {
+           background-image: url('images/valentina-hit.png') !important;
+       }
+       ------------------------------------------------------------- */
+}
+
+/* Nouveau css */
+.valentina {
+    width: 115%;
+    height: 125%;
+    position: relative;
+    cursor: pointer;
+    transform: translateY(120%);
+    transition: transform 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    z-index: 5;
+
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: contain;
+
+    border-radius: 0;
+}
+
+
+/* ==========================================================================
+   VISUELS PNG / WEBP DE VALENTINA
+   ========================================================================== */
+
+/* On désactive les anciens pseudo-éléments du dessin CSS */
+.valentina::before,
+.valentina::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* On cache les anciens morceaux de visage CSS */
+.valentina-face,
+.valentina-jacket,
+.valentina-glasses,
+.valentina-nose,
+.valentina-eyes,
+.valentina-mouth,
+.valentina-fringe {
+    display: none !important;
+}
+
+/* Image par défaut */
+.valentina {
+    background-image: url("images/valentina-normale.png");
+}
+
+/* Types de Valentina */
+.valentina.type-normale {
+    background-image: url("images/valentina-normale.png");
+}
+
+.valentina.type-victime {
+    background-image: url("images/valentina-victime.png");
+}
+
+.valentina.type-fausse-gentille {
+    background-image: url("images/valentina-fausse-gentille.png");
+}
+
+.valentina.type-fausse-gentille.fake-mean {
+    background-image: url("images/valentina-fausse-gentille-mean.png");
+}
+
+.valentina.type-ego-boost {
+    background-image: url("images/valentina-ego-boost.png");
+    filter: drop-shadow(0 0 10px var(--color-accent-gold));
+}
+
+.valentina.type-rage {
+    background-image: url("images/valentina-rage.png");
+    filter: drop-shadow(0 0 10px var(--color-accent-red));
+}
+
+.valentina.type-miroir {
+    background-image: url("images/valentina-miroir.png");
+}
+
+/* Valentina vaincue sur l'écran de victoire */
+.valentina.type-wounded {
+    background-image: url("images/valentina-pleurs.png") !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: contain !important;
+}
+
+/* On masque les anciens éléments CSS de la version wounded */
+.valentina.type-wounded::before,
+.valentina.type-wounded::after,
+.valentina.type-wounded .valentina-face,
+.valentina.type-wounded .valentina-jacket,
+.valentina.type-wounded .valentina-glasses,
+.valentina.type-wounded .valentina-nose,
+.valentina.type-wounded .valentina-eyes,
+.valentina.type-wounded .valentina-mouth,
+.valentina.type-wounded .valentina-fringe {
+    content: none !important;
+    display: none !important;
+}
+
+
+/* Quand on tape sur Valentina */
+/* Animation quand Valentina est frappée */
+.valentina.is-hit {
+    animation: valentinaHitFall 0.75s ease-in forwards !important;
+    pointer-events: none;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.8));
+}
+
+@keyframes valentinaHitFall {
+    0% {
+        transform: translateY(0%) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+
+    15% {
+        transform: translateY(-12%) scale(1.1) rotate(-7deg);
+        opacity: 1;
+    }
+
+    35% {
+        transform: translateY(10%) scale(0.9) rotate(6deg);
+        opacity: 1;
+    }
+
+    70% {
+        transform: translateY(75%) scale(0.55) rotate(-14deg);
+        opacity: 0.75;
+    }
+
+    100% {
+        transform: translateY(150%) scale(0.15) rotate(25deg);
+        opacity: 0;
+    }
+}
+/* Quand la taupe sort */
+.valentina.up {
+    transform: translateY(0%);
+}
+
+/* Styles communs du dessin vectoriel CSS de Valentina */
+.valentina::before {
+    /* Cheveux orange en arrière-plan */
+    content: '';
+    position: absolute;
+    top: 5%;
+    left: 4%;
+    right: 4%;
+    bottom: 0;
+    background-color: #E55C1E; /* Orange vif de la fiche de perso */
+    border-radius: 50% 50% 20% 20%;
+    box-shadow: inset 0 3px 6px rgba(255,255,255,0.3);
+    border: 3px solid #111;
+}
+
+/* Corps : Veste noire */
+.valentina-jacket {
+    position: absolute;
+    bottom: 0;
+    left: 15%;
+    width: 70%;
+    height: 33%;
+    background-color: #2F2F2F; /* Style blazer noir de bureau */
+    border-radius: 20% 20% 0 0;
+    border: 3px solid #111;
+    z-index: 2;
+    overflow: hidden;
+}
+
+/* Col orange de la veste */
+.valentina-jacket::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    background-color: #F15A24; /* T-shirt orange vif sous la veste */
+    border: 3px solid #111;
+    border-top: none;
+    border-radius: 0 0 50% 50%;
+}
+
+/* Visage */
+.valentina-face {
+    position: absolute;
+    top: 15%;
+    left: 18%;
+    width: 64%;
+    height: 55%;
+    background-color: #FCE1D2; /* Couleur de peau cartoon ultra-propre */
+    border-radius: 46% 46% 45% 45%; /* Forme de joues rebondies du dessin */
+    border: 3px solid #111;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Locks de cheveux orange encadrant son visage (gauche et droite) */
+.valentina-face::before {
+    content: '';
+    position: absolute;
+    top: -5%;
+    left: -14%;
+    width: 25%;
+    height: 105%;
+    background-color: #E55C1E;
+    border: 3px solid #111;
+    border-radius: 40% 10% 20% 70%;
+    z-index: 1;
+}
+
+.valentina-face::after {
+    content: '';
+    position: absolute;
+    top: -5%;
+    right: -14%;
+    width: 25%;
+    height: 105%;
+    background-color: #E55C1E;
+    border: 3px solid #111;
+    border-radius: 10% 40% 70% 20%;
+    z-index: 1;
+}
+
+/* Lunettes noires signature - Grosses et rondes style cartoon */
+.valentina-glasses {
+    position: absolute;
+    top: 22%;
+    left: 3%;
+    width: 94%;
+    height: 42%;
+    z-index: 4;
+}
+
+/* Verres gauche et droite avec contours noirs épais */
+.valentina-glasses::before, .valentina-glasses::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 44%;
+    height: 100%;
+    border: 6px solid #111;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: inset 1px 3px 6px rgba(255,255,255,0.4), 0 2px 4px rgba(0,0,0,0.15);
+    box-sizing: border-box;
+}
+
+.valentina-glasses::before { left: 3%; }
+.valentina-glasses::after { right: 3%; }
+
+/* Nez mignon et arrondi */
+.valentina-nose {
+    position: absolute;
+    top: 48%;
+    left: 44%;
+    width: 12%;
+    height: 14%;
+    background-color: #E7A483;
+    border: 3px solid #111;
+    border-radius: 50%;
+    z-index: 3;
+}
+
+/* Yeux à l'intérieur des lunettes */
+.valentina-eyes {
+    position: absolute;
+    top: 36%;
+    left: 5%;
+    width: 90%;
+    display: flex;
+    justify-content: space-around;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.eye {
+    width: 10px;
+    height: 10px;
+    background-color: #111;
+    border-radius: 50%;
+    transition: all 0.1s ease;
+}
+
+/* Bouche */
+.valentina-mouth {
+    position: absolute;
+    bottom: 20%;
+    width: 30%;
+    height: 6px;
+    background-color: #8c0000;
+    border-radius: 3px;
+    transition: all 0.15s ease;
+}
+
+/* Mèche blonde emblématique sur la gauche (droite en perspective) de Valentina */
+.valentina-fringe {
+    position: absolute;
+    top: 5%;
+    left: 17%;
+    width: 33%;
+    height: 38%;
+    background-color: #FFD23F; /* Mèche blonde brillante d'origine */
+    border: 3px solid #111;
+    border-radius: 0 0 30% 90%;
+    z-index: 5;
+    transform: rotate(-12deg);
+    box-shadow: inset -3px -3px 0 rgba(0,0,0,0.05);
+}
+
+/* ==========================================================================
+   MODIFICATEURS DES TYPES DE VALENTINA (MÉCANIQUES DE JEU UNIQUES)
+   ========================================================================== */
+
+/* 1. Valentina Normale - Petit sourire narquois arrogant */
+.type-normale .valentina-mouth {
+    width: 25%;
+    height: 8px;
+    border: 3px solid #111;
+    border-top: none;
+    border-radius: 0 0 14px 14px;
+    background-color: transparent;
+    bottom: 22%;
+}
+
+/* 2. Valentina Victime - Triste, larmes */
+.type-victime .valentina-face {
+    background-color: #FCE1D2;
+}
+.type-victime .valentina-mouth {
+    width: 20px;
+    height: 8px;
+    border: 3px solid #111;
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+    background-color: transparent;
+    bottom: 24%;
+}
+.type-victime .eye {
+    height: 4px;
+    border-radius: 4px 4px 0 0;
+    background-color: transparent;
+    border-top: 3px solid #111;
+}
+/* Larme d'eau en CSS */
+.type-victime::after {
+    content: '💧';
+    position: absolute;
+    top: 35%;
+    right: 20%;
+    font-size: 1.2rem;
+    z-index: 15;
+    animation: drip 1s infinite linear;
+}
+
+/* 3. Valentina Fausse Gentille */
+.type-fausse-gentille .valentina-mouth {
+    width: 26%;
+    height: 10px;
+    border: 3px solid #111;
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    background-color: transparent;
+    bottom: 22%;
+}
+
+/* Transition vers Méchante/Sly */
+.type-fausse-gentille.fake-mean .valentina-face {
+    background-color: #FBCCCC;
+}
+.type-fausse-gentille.fake-mean .valentina-mouth {
+    width: 28%;
+    height: 8px;
+    border: 3px solid #111;
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+    background-color: transparent;
+    bottom: 22%;
+}
+
+/* 4. Valentina Ego Boost (Surlignée en or avec des étoiles tournantes) */
+.type-ego-boost {
+    filter: drop-shadow(0 0 10px var(--color-accent-gold));
+}
+.type-ego-boost .eye {
+    width: 8px;
+    height: 6px;
+    background-color: transparent;
+    border-bottom: 3px solid #111;
+    border-radius: 50%;
+}
+.type-ego-boost .valentina-mouth {
+    width: 30%;
+    height: 14px;
+    background-color: #FFAAA6;
+    border: 3px solid #111;
+    border-radius: 0 0 15px 15px;
+    bottom: 18%;
+}
+.type-ego-boost::after {
+    content: '✨';
+    position: absolute;
+    top: -10px;
+    left: 35%;
+    font-size: 1.8rem;
+    animation: rotateGold 3s infinite linear;
+    z-index: 10;
+}
+
+/* 5. Valentina Rage (Rageuse rouge vif) */
+.type-rage .valentina-face {
+    background-color: #FBADAD;
+}
+.type-rage .eye {
+    width: 10px;
+    height: 6px;
+    border-radius: 0;
+    transform: rotate(-15deg);
+    background-color: transparent;
+    border-top: 3px solid #111;
+}
+.type-rage .valentina-glasses::before, .type-rage .valentina-glasses::after {
+    box-shadow: inset 0 5px 0 #111; /* Sourcils en colère */
+}
+.type-rage .valentina-mouth {
+    width: 32%;
+    height: 18px;
+    background-color: #E25E29; /* Bouche hurlante orange intérieur */
+    border: 3px solid #111;
+    border-radius: 50% 50% 20% 20%;
+    bottom: 15%;
+}
+.type-rage::before {
+    background-color: var(--color-accent-red);
+}
+.type-rage::after {
+    content: '💢';
+    position: absolute;
+    top: 5%;
+    right: 10%;
+    font-size: 1.5rem;
+    z-index: 10;
+    animation: popBubble 0.3s infinite ease-in-out;
+}
+
+/* 6. Valentina Miroir - Masquée par un miroir */
+.type-miroir .valentina-face {
+    filter: blur(1px);
+}
+.mirror-shield {
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    width: 80%;
+    height: 60%;
+    background: linear-gradient(135deg, #a5ffd6, #84d8ff);
+    border: 4px solid var(--color-accent-gold);
+    border-radius: 12px;
+    z-index: 11;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+/* Reflet brillant dans le miroir */
+.mirror-shield::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 100%);
+    transform: skewX(-25deg);
+    animation: glint 1.8s infinite linear;
+}
+.mirror-shield::after {
+    content: '🪞';
+    font-size: 1.8rem;
+}
+
+
+
+/* Nettoyage des anciens effets emoji CSS sur les images */
+.valentina.type-victime::after,
+.valentina.type-ego-boost::after,
+.valentina.type-rage::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* ==========================================================================
+   4. PHASE ULTIMATE FORM (COCHON D'INDE DIABOLIQUE GÉANT)
+   ========================================================================== */
+#boss-stage {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    animation: fadeIn 0.5s ease-out;
+    padding: 0.5rem;
+}
+
+#boss-stage.active {
+    display: flex;
+}
+
+/* Arrière-plan de flammes animées en CSS */
+.boss-flame-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(217, 4, 41, 0.25) 0%, rgba(0,0,0,0) 60%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.boss-header {
+    width: 100%;
+    text-align: center;
+    z-index: 1;
+    margin-bottom: 0.8rem;
+}
+
+.boss-header h2 {
+    color: var(--color-accent-red);
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(255, 51, 102, 0.4);
+}
+
+.boss-subtitle {
+    font-size: 0.85rem;
+    color: #ffbbcc;
+    margin-bottom: 0.8rem;
+}
+
+/* Barre de vie du boss */
+.boss-health-container {
+    background-color: rgba(0,0,0,0.6);
+    padding: 0.6rem 1rem;
+    border-radius: 16px;
+    border: 2px solid var(--color-accent-red);
+}
+
+.boss-health-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ffccd5;
+    margin-bottom: 4px;
+}
+
+.boss-health-bar {
+    width: 100%;
+    height: 18px;
+    background-color: #33000f;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
+}
+
+#boss-health-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #d90429 0%, #ff4d6d 100%);
+    box-shadow: 0 0 12px #ff3366;
+    transition: width 0.15s cubic-bezier(0.1, 0.8, 0.3, 1);
+}
+
+/* Corps géant du boss */
+.boss-body-container {
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    margin: 1.5rem 0;
+    width: 100%;
+}
+
+.boss-character {
+    width: 500px;
+    height: 500px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    touch-action: manipulation;
+
+    background-image: url("images/valentina-boss.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+/* -----------------------------------------------------------------
+   POUR METTRE VOTRE PNG COCHON D'INDE GEANT :
+   Simplement appliquer :
+   
+   .boss-character {
+       background-image: url('images/valentina-ultimate.png');
+       background-size: contain;
+       background-repeat: no-repeat;
+       background-position: center;
+   }
+   Retirer les sous-éléments ci-dessous (.boss-graphic, etc) qui le dessinent en CSS.
+   ----------------------------------------------------------------- */
+
+/*
+.boss-graphic {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #cc4e00 0%, #801a00 100%);
+    border-radius: 50% 50% 45% 45%;
+    border: 6px solid #111;
+    box-shadow: inset 0 6px 12px rgba(255,255,255,0.2), 0 10px 25px rgba(0,0,0,0.5);
+    position: relative;
+}
+
+/* Visage et moustaches de cochon d'inde */
+/* .boss-graphic::before {
+    content: '🐹';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5.5rem;
+    opacity: 0.3;
+}*/
+
+/* Méche orange de Valentina sur le boss */
+/*.boss-graphic::after {
+    content: '';
+    position: absolute;
+    top: 5%;
+    left: 20%;
+    width: 60%;
+    height: 35%;
+    background-color: var(--color-primary);
+    border-radius: 50% 50% 20% 20%;
+    border-bottom: 4px solid var(--color-accent-gold);
+}*/
+
+/* Lunettes diaboliques du boss */
+/*.boss-glasses {
+    position: absolute;
+    top: 35%;
+    left: 10%;
+    width: 80%;
+    height: 30px;
+    z-index: 10;
+}*/
+
+/*.boss-glasses::before, .boss-glasses::after {
+    content: '';
+    position: absolute;
+    width: 35%;
+    height: 35px;
+    border: 5px solid #000;
+    border-radius: 50%;
+    background-color: rgba(255, 0, 0, 0.4);
+}
+.boss-glasses::before { left: 8%; }
+.boss-glasses::after { right: 8%; }*/
+
+/* Cornes de démon */
+/*.boss-horns {
+    position: absolute;
+    top: -15px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 5;
+}
+
+.boss-horns::before, .boss-horns::after {
+    content: '';
+    width: 25px;
+    height: 40px;
+    background-color: red;
+    border: 3px solid #000;
+}
+
+.boss-horns::before {
+    border-radius: 0 100% 0 0;
+    transform: rotate(-25deg);
+}
+.boss-horns::after {
+    border-radius: 100% 0 0 0;
+    transform: rotate(25deg);
+}
+*/
+/* Queue pointue de démon */
+/*.boss-tail {
+    position: absolute;
+    bottom: 20px;
+    right: -25px;
+    width: 30px;
+    height: 40px;
+    border-right: 5px solid red;
+    border-bottom: 5px solid red;
+    border-radius: 0 0 30px 0;
+    z-index: -1;
+}
+
+.boss-tail::after {
+    content: '▲';
+    color: red;
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    transform: rotate(45deg);
+}
+
+.boss-instructions {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-accent-gold);
+    animation: wavePulse 1s infinite alternate;
+    z-index: 1;
+    text-align: center;
+}
+
+*/
+
+
+/* ==========================================================================
+   5. ÉCRAN DE VICTOIRE
+   ========================================================================== */
+#victory-screen {
+    justify-content: center;
+    text-align: center;
+    gap: 1.2rem;
+}
+
+.victory-banner {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #4cc9f0;
+    text-shadow: 0 0 12px rgba(76, 201, 240, 0.5);
+    animation: wavePulse 1s infinite alternate;
+}
+
+#victory-character {
+     width: min(70vw, 320px);
+     height: min(70vw, 320px);
+     margin: 1rem auto;
+     position: relative;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+}
+#victory-character .valentina {
+    width: 100%;
+    height: 100%;
+    transform: translateY(0%);
+    animation: floatSlow 3s infinite ease-in-out;
+
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: contain !important;
+}
+@keyframes floatSlow {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(-1.5deg); }
+}
+
+/* Défaite définitive (Écran de victoire) */
+.type-wounded .valentina-face {
+    background-color: #E2DBD0; /* Teint fatigué par la défaite */
+}
+/* Shiner sous l'oeil gauche (gauche du joueur) */
+.type-wounded .valentina-glasses::after {
+    background-color: rgba(147, 112, 219, 0.45); /* Œil au beurre noir violet sympa */
+}
+.type-wounded .eye:last-child {
+    height: 2px;
+    border-radius: 0;
+    margin-top: 4px;
+    background-color: #111;
+}
+/* Oeil droit (gauche du joueur) hébété */
+.type-wounded .eye:first-child {
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, #fff, #111) !important;
+}
+/* Bouche déconfite avec la langue pendante */
+.type-wounded .valentina-mouth {
+    width: 22px;
+    height: 12px;
+    background-color: #111;
+    border: 3px solid #111;
+    border-radius: 0 0 12px 12px;
+    bottom: 16%;
+    position: relative;
+}
+.type-wounded .valentina-mouth::before {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 3px;
+    width: 12px;
+    height: 13px;
+    background-color: #FF758F; /* Langue rose pendante */
+    border: 2px solid #111;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    z-index: 10;
+}
+/* Pansement blanc emblématique sur le front */
+.type-wounded::after {
+    content: '🩹';
+    position: absolute;
+    top: 15%;
+    left: 32%;
+    font-size: 2rem;
+    z-index: 10;
+    transform: rotate(-15deg);
+}
+
+.victory-title {
+    font-size: 1.8rem;
+    color: var(--color-accent-gold);
+}
+
+.results-box {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 1.5rem;
+}
+
+.victory-quote {
+    font-style: italic;
+    color: #ffccd5;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 1.2rem;
+    border-bottom: 1px dashed rgba(255,255,255,0.15);
+    padding-bottom: 1rem;
+}
+
+.score-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
+    font-size: 1.1rem;
+}
+
+.score-highlight {
+    color: #4cc9f0;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.rating-highlight {
+    color: var(--color-accent-gold);
+    font-weight: 700;
+}
+
+/* ==========================================================================
+   6. EFFETS DE PARTICULES & CLICS FLOTANTS
+   ========================================================================== */
+.score-floating {
+    position: absolute;
+    pointer-events: none;
+    font-size: 1.4rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    z-index: 100;
+    animation: floatUp 0.8s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.score-floating.positive {
+    color: var(--color-accent-gold);
+}
+
+.score-floating.negative {
+    color: var(--color-accent-red);
+}
+
+.score-floating.text {
+    font-size: 0.95rem;
+    color: #fff;
+    background-color: rgba(0,0,0,0.7);
+    padding: 2px 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* ==========================================================================
+   ANIMATIONS & KEYFRAMES
+   ========================================================================== */
+@keyframes pulseLogo {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+@keyframes drip {
+    0% { transform: translateY(0); opacity: 1; }
+    80% { transform: translateY(15px); opacity: 0.8; }
+    100% { transform: translateY(15px); opacity: 0; }
+}
+
+@keyframes glint {
+    0% { left: -100%; }
+    100% { left: 150%; }
+}
+
+@keyframes rotateGold {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.2); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0) scale(0.6); opacity: 0; }
+    20% { transform: translateY(-20px) scale(1.1); opacity: 1; }
+    100% { transform: translateY(-70px) scale(0.8); opacity: 0; }
+}
+
+@keyframes popBubble {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes hitShake {
+    0% { transform: scale(0.9) rotate(-3deg); }
+    50% { transform: scale(0.9) rotate(3deg); }
+    100% { transform: scale(0.9) rotate(0deg); }
+}
+
+@keyframes hitShakeGiant {
+    0% { transform: scale(0.92) translate(-5px, -3px) rotate(-1deg); }
+    50% { transform: scale(0.95) translate(5px, 2px) rotate(1deg); }
+    100% { transform: scale(1) translate(0, 0) rotate(0deg); }
+}
+
+@keyframes wavePulse {
+    0% { transform: scale(1); opacity: 0.95; }
+    100% { transform: scale(1.05); opacity: 1; }
+}
+
+@keyframes spinSlow {
+    0% { transform: rotate(0) scale(1); }
+    50% { transform: rotate(180deg) scale(1.05); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Effets vibrants activés sur l'écran lors des hits importants */
+.screen-shocked {
+    animation: windowShake 0.15s infinite;
+}
+
+@keyframes windowShake {
+    0% { transform: translate(2px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(0px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(2px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(2px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+
+.valentina.type-gameover {
+    background-image: url("images/valentina-win.png") !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: contain !important;
+}
+
+
+.lives-indicator {
+    margin-left: 0.8rem;
+}
+
+.lives-value {
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.boss-character.boss-defeated {
+    background-image: url("images/valentina-pleurs.png") !important;
+    animation: bossDefeatedFall 1s ease-in forwards !important;
+    pointer-events: none;
+}
+
+@keyframes bossDefeatedFall {
+    0% {
+        transform: translateY(0) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+
+    20% {
+        transform: translateY(-20px) scale(1.08) rotate(-5deg);
+        opacity: 1;
+    }
+
+    60% {
+        transform: translateY(80px) scale(0.7) rotate(10deg);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(180px) scale(0.25) rotate(25deg);
+        opacity: 0;
+    }
+}
+
+
+.level-indicator {
+    margin-left: 0.6rem;
+}
+
+.level-indicator .score-value {
+    color: var(--color-accent-gold);
+}
